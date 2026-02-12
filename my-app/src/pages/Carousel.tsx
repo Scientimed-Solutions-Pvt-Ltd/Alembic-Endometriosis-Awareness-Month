@@ -1,0 +1,169 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
+import SideMenu from '../components/SideMenu';
+import bgImage from '../assets/images/bg01.png';
+
+// Import all carousel images
+import slide1 from '../assets/images/scrn1.png';
+import slide2 from '../assets/images/scrn2.png';
+import slide3 from '../assets/images/scrn3.png';
+
+const slides = [
+  { id: 1, image: slide1, alt: 'Endometriosis Awareness Slide 1' },
+  { id: 2, image: slide2, alt: 'Endometriosis Awareness Slide 2' },
+  { id: 3, image: slide3, alt: 'Endometriosis Awareness Slide 3' },
+];
+
+const Carousel: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  }, []);
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'ArrowRight') {
+        nextSlide();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [nextSlide, prevSlide]);
+
+  return (
+    <div className="min-h-screen flex flex-col relative">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        // style={{ backgroundImage: `url(${bgImage})` }}
+      />
+      
+      {/* Gradient Header Overlay */}
+      <div className="absolute top-0 left-0 right-0 h-20 md:h-24 bg-gradient-to-r from-amber-500 via-rose-500 via-60% to-purple-600" />
+      
+      {/* Content */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Header onMenuClick={toggleMenu} />
+        <SideMenu isOpen={isMenuOpen} onClose={closeMenu} />
+        
+        <main className="flex-1 flex flex-col relative ">
+          {/* Carousel Container */}
+          <div className="flex-1 relative overflow-hidden">
+            {/* Slides */}
+            <div className="absolute inset-0">
+              {slides.map((slide, index) => (
+                <div
+                  key={slide.id}
+                  className="absolute inset-0"
+                  style={{ 
+                    transform: `translateX(${(index - currentSlide) * 100}%)`,
+                    transition: 'transform 700ms cubic-bezier(0.4, 0, 0.2, 1)'
+                  }}
+                >
+                  <img
+                    src={slide.image}
+                    alt={slide.alt}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={prevSlide}
+              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300 hover:scale-110"
+              aria-label="Previous slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <button
+              onClick={nextSlide}
+              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 bg-white/20 hover:bg-white/40 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300 hover:scale-110"
+              aria-label="Next slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* Bottom Controls */}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-4">
+              {/* Dot Indicators */}
+              {/* <div className="flex items-center gap-2">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`transition-all duration-300 rounded-full ${
+                      index === currentSlide
+                        ? 'w-8 h-3 bg-white'
+                        : 'w-3 h-3 bg-white/50 hover:bg-white/70'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div> */}
+              
+              {/* Next Button */}
+              <button
+                onClick={() => navigate('/take-pledge')}
+                className="prplbtn1 shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all duration-300"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+          
+          <footer className="absolute bottom-2 right-4 md:bottom-4 md:right-6 z-30">
+            <p className="text-xs text-white/90 text-right drop-shadow-md">
+              All the images used in this material are for illustration purposes only
+            </p>
+          </footer>
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default Carousel;
