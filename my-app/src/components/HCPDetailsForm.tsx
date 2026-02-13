@@ -281,7 +281,7 @@ const HCPDetailsForm: React.FC<HCPDetailsFormProps> = ({ onBack, onLogin }) => {
       {showCropper && imageToCrop && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
           <div className="bg-white rounded-2xl p-4 w-[90%] max-w-md">
-            <h4 className="text-lg font-bold text-purple-900 mb-4 text-center">Crop Photo (1:1)</h4>
+            <h4 className="text-lg font-bold text-purple-900 mb-4 text-center">Add Photo</h4>
             <div className="relative w-full h-64 bg-gray-200 rounded-xl overflow-hidden">
               <Cropper
                 image={imageToCrop}
@@ -309,14 +309,14 @@ const HCPDetailsForm: React.FC<HCPDetailsFormProps> = ({ onBack, onLogin }) => {
               <button
                 type="button"
                 onClick={handleCropCancel}
-                className="flex-1 py-2 px-4 bg-gray-300 text-gray-700 rounded-xl hover:bg-gray-400 transition-colors"
+                className="flex-1 py-2 px-4 grybtn1 transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleCropConfirm}
-                className="flex-1 py-2 px-4 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors"
+                className="flex-1 py-2 px-4 prplbtn1 transition-colors"
               >
                 Crop & Save
               </button>
