@@ -8,6 +8,8 @@ interface HCPDetailsFormProps {
 
 interface FormData {
   hcpname: string;
+  registrationNo: string;
+  pCode: string;
   city: string;
   photo: string;
   mobile: string;
@@ -59,6 +61,8 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: CroppedAreaPixels): Pr
 const HCPDetailsForm: React.FC<HCPDetailsFormProps> = ({ onBack, onLogin }) => {
   const [formData, setFormData] = useState<FormData>({
     hcpname: '',
+    registrationNo: '',
+    pCode: '',
     city: '',
     photo: '',
     mobile: '',
@@ -177,6 +181,30 @@ const HCPDetailsForm: React.FC<HCPDetailsFormProps> = ({ onBack, onLogin }) => {
           />
         </div>
 
+        <div className="mb-6">
+          <input
+            type="text"
+            className={inputClasses}
+            id="registrationNo"
+            name="registrationNo"
+            value={formData.registrationNo}
+            onChange={handleChange}
+            placeholder="Enter Registration No."
+          />
+        </div>
+
+        <div className="mb-6">
+          <input
+            type="text"
+            className={inputClasses}
+            id="pCode"
+            name="pCode"
+            value={formData.pCode}
+            onChange={handleChange}
+            placeholder="Enter P. Code"
+          />
+        </div>
+
             <div className="mb-6">
           {/* <label htmlFor="mobile" className={labelClasses}>
             Mobile
@@ -222,7 +250,7 @@ const HCPDetailsForm: React.FC<HCPDetailsFormProps> = ({ onBack, onLogin }) => {
           />
         </div>
 
-        <div className="mb-6">
+        <div className="mb-6 hidden">
           {/* Hidden file input for photo */}
           <input
             type="file"

@@ -9,7 +9,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   return (
     <header className="relative z-10">
       <div className="w-full px-4 md:px-8">
-        <div className="flex items-center justify-between py-4">
+        <div className="flex items-center justify-between py-1 sm:py-4">
           <div>
             <img 
               src={alembicLogo} 

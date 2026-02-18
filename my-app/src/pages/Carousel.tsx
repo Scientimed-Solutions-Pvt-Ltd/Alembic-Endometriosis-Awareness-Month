@@ -3,16 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import SideMenu from '../components/SideMenu';
 import bgImage from '../assets/images/bg01.png';
+import logoImage from '../assets/images/logo.png';
 
 // Import all carousel images
 import slide1 from '../assets/images/scrn1.png';
 import slide2 from '../assets/images/scrn2.png';
-import slide3 from '../assets/images/scrn3.png';
+//import slide3 from '../assets/images/scrn3.png';
 
 const slides = [
   { id: 1, image: slide1, alt: 'Endometriosis Awareness Slide 1' },
   { id: 2, image: slide2, alt: 'Endometriosis Awareness Slide 2' },
-  { id: 3, image: slide3, alt: 'Endometriosis Awareness Slide 3' },
+  //{ id: 3, image: slide3, alt: 'Endometriosis Awareness Slide 3' },
 ];
 
 const Carousel: React.FC = () => {
@@ -81,6 +82,12 @@ const Carousel: React.FC = () => {
       {/* Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header onMenuClick={toggleMenu} />
+        
+        {/* Logo in center of header */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20 pt-4 md:pt-0">
+          <img src={logoImage} alt="Logo" className="h-12 md:h-24 w-auto" />
+        </div>
+        
         <SideMenu isOpen={isMenuOpen} onClose={closeMenu} />
         
         <main className="flex-1 flex flex-col relative ">

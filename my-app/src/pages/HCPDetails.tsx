@@ -24,8 +24,8 @@ const HCPDetails: React.FC = () => {
 
   const handleLogin = (data: any) => {
     console.log('Login with data:', data);
-    // Navigate to carousel page
-    navigate('/carousel');
+    // Navigate to info slider page
+    navigate('/info-slider');
   };
 
   // Prevent body scroll when menu is open

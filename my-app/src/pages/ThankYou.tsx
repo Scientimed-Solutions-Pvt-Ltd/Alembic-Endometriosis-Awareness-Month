@@ -89,22 +89,22 @@ const ThankYou: React.FC = () => {
             </div>
 
             {/* Thank You Message */}
-            <h1 className="text-6xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-relaxed">
+            <h1 className="text-5xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-relaxed">
               Thank you
             </h1>
             
             <p className="thanktext">
-              for supporting us with your pledge for <b><i>#ISupportYellowMarch</i></b>
+              for supporting us and for pledging your participation in <b><i>#ISupportYellowMarch</i></b>
             <br />
              <span>Endometriosis Awareness Month</span>
             </p>
           </div>
           
-          <footer className="absolute bottom-2 right-4 md:bottom-4 md:right-6 z-10">
+          {/* <footer className="absolute bottom-2 right-4 md:bottom-4 md:right-6 z-10">
             <p className="text-xs text-gray-600 text-right">
               All the images used in this material are for illustration purposes only
             </p>
-          </footer>
+          </footer> */}
         </main>
       </div>
     </div>
