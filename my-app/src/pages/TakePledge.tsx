@@ -52,7 +52,7 @@ const TakePledge: React.FC = () => {
   const recognitionRef = useRef<ISpeechRecognition | null>(null);
 
   // Target words to detect from "I support yellow march"
-  const targetWords = ['i', 'support', 'yellow', 'march'];
+  const targetWords = ['i support yellow march'];
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

@@ -498,6 +498,7 @@ max-width: 600px;
 .ref{
   z-index: 99;
   left: 0;
+          width: 100%;
 }
 }
 
@@ -616,7 +617,9 @@ color: #facc15;
 
 .ref{
   z-index: 99;
-  left: 0;
+        left: 0;
+        width: 100%;
+        position: relative;
 }
 
 .sldcontainer {
