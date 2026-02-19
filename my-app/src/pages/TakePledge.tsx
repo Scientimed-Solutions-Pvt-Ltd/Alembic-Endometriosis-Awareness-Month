@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import SideMenu from '../components/SideMenu';
+import RibbonProgress from '../components/RibbonProgress';
 import logoImage from '../assets/images/logo.png';
 
 // Extend Window interface for SpeechRecognition API
@@ -37,7 +38,7 @@ declare global {
 
 const TakePledge: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [ribbonImage, setRibbonImage] = useState('./src/assets/images/ribbon-g.png');
+  const [ribbonProgress, setRibbonProgress] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showConsent, setShowConsent] = useState(true);
   const [pledgeCompleted, setPledgeCompleted] = useState(false);
@@ -86,11 +87,33 @@ const TakePledge: React.FC = () => {
     setIsListening(false);
     setIsAnimating(true);
     
-    // Change ribbon image to colored version and show success message
-    setTimeout(() => {
-      setRibbonImage('./src/assets/images/ribbon-c.png');
-      setPledgeCompleted(true);
-    }, 300);
+    // Animate ribbon progress from 0 to 100% using requestAnimationFrame for smoothest animation
+    const animationDuration = 2000; // Total animation time in ms
+    let startTime: number | null = null;
+    
+    // Ease-out cubic for smooth deceleration
+    const easeOutCubic = (t: number): number => 1 - Math.pow(1 - t, 3);
+    
+    const animateProgress = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const linearProgress = Math.min(elapsed / animationDuration, 1);
+      
+      // Apply easing for smooth animation
+      // this 50 should change dynamically
+      const easedProgress = easeOutCubic(linearProgress) * 50;
+      setRibbonProgress(easedProgress);
+      
+      if (linearProgress < 1) {
+        requestAnimationFrame(animateProgress);
+      } else {
+        // Animation complete, show success message
+        setPledgeCompleted(true);
+      }
+    };
+    
+    // Start the animation
+    requestAnimationFrame(animateProgress);
     
     console.log('Speech detected! Pledge completed!');
     
@@ -230,6 +253,8 @@ const TakePledge: React.FC = () => {
       }
     };
   }, []);
+
+  
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -404,17 +429,17 @@ awareness of Endometriosis with a goal of improving quality of life of affected 
                   )}
                 </div>
 
-                  {/* Gray Awareness Ribbon */}
+                  {/* Gray Awareness Ribbon with Progress */}
                  <div className="w-full md:w-[25%] text-center">
-                 <img 
-                   src={ribbonImage} 
-                   alt="Awareness Ribbon" 
-                   className={`m-auto transition-all duration-500 ease-in-out ${
-                     isAnimating 
-                       ? 'scale-110 rotate-0' 
-                       : 'scale-100 rotate-0'
-                   }`}
-                 />
+                   <RibbonProgress
+                     percentage={ribbonProgress}
+                     transitionDuration={100}
+                     className={`m-auto transition-transform duration-700 ease-out ${
+                       isAnimating 
+                         ? 'scale-105' 
+                         : 'scale-100'
+                     }`}
+                   />
                 </div>
               </div>
             
